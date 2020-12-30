@@ -134,6 +134,7 @@ class FRCNN(object):
             bbox = np.array(bbox,np.int32)
 
             return bbox, conf, label
+            # 以下代码为给单张图片画框
         image = old_image
         thickness = (np.shape(old_image)[0] + np.shape(old_image)[1]) // old_width*2
         font = ImageFont.truetype(font='model_data/simhei.ttf',size=np.floor(3e-2 * np.shape(image)[1] + 0.5).astype('int32'))
