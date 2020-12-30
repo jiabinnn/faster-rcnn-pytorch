@@ -1,5 +1,5 @@
 # 从VOCdevkit/VOC2007/voc2frcnn.py修改过来
-
+# 把数据集文件名保存起来
 
 import os
 import random 
