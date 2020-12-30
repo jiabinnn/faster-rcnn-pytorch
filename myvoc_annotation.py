@@ -1,4 +1,5 @@
-# 修改自voc_annotation.pys
+# 修改自voc_annotation.py
+# 用于训练，标注文件路径和box信息
 
 import xml.etree.ElementTree as ET
 from os import getcwd
