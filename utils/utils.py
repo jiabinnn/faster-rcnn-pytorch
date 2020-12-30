@@ -112,7 +112,11 @@ class DecodeBox():
         raw_prob = prob.cpu().numpy()
 
         outputs = []
-        arg_prob = np.argmax(raw_prob, axis=1)
+        
+        # arg_prob = np.argmax(raw_prob, axis=1)
+        # 添加以下
+        arg_prob = np.ones(raw_prob.shape[0], dtype=np.int64)
+        
         for l in range(1, self.num_classes):
             arg_mask = (arg_prob == l)
             cls_bbox_l = raw_cls_bbox[arg_mask, l, :]
@@ -131,7 +135,11 @@ class DecodeBox():
             
             prob_l_index = np.argsort(prob_l)[::-1]
             detections_class = detections_class[prob_l_index]
+            # sunjiabin
+            # 如果不需要iou，则注释下一行，不注释下下行
             nms_out = nms(detections_class, nms_iou)
+            # nms_out = detections_class
+
             if outputs==[]:
                 outputs = nms_out
             else:

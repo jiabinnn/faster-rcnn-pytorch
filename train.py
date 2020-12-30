@@ -86,8 +86,8 @@ def fit_ont_epoch(net,epoch,epoch_size,epoch_size_val,gen,genval,Epoch,cuda):
     
 if __name__ == "__main__":
     # 参数初始化
-    annotation_path = '2007_train.txt'
-    NUM_CLASSES = 20
+    annotation_path = 'traindata.txt'
+    NUM_CLASSES = 1
     IMAGE_SHAPE = [600,600,3]
     BACKBONE = "resnet50"
     model = FasterRCNN(NUM_CLASSES,backbone=BACKBONE)
@@ -104,7 +104,7 @@ if __name__ == "__main__":
     pretrained_dict = torch.load(model_path, map_location=device)
     pretrained_dict = {k: v for k, v in pretrained_dict.items() if np.shape(model_dict[k]) ==  np.shape(v)}
     model_dict.update(pretrained_dict)
-    model.load_state_dict(model_dict)
+    # model.load_state_dict(model_dict)
     print('Finished!')
 
     net = model.train()
@@ -123,7 +123,6 @@ if __name__ == "__main__":
     num_val = int(len(lines)*val_split)
     num_train = len(lines) - num_val
 
-    
     if True:
         lr = 1e-4
         Init_Epoch = 0
@@ -158,7 +157,8 @@ if __name__ == "__main__":
         model.freeze_bn()
 
         train_util = FasterRCNNTrainer(model,optimizer)
-
+        
+        
         for epoch in range(Init_Epoch,Freeze_Epoch):
             fit_ont_epoch(net,epoch,epoch_size,epoch_size_val,gen,gen_val,Freeze_Epoch,Cuda)
             lr_scheduler.step()
